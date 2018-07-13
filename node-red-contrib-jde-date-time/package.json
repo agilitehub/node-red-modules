@@ -1,0 +1,40 @@
+{
+  "name": "node-red-contrib-jde-date-time",
+  "license": "MIT",
+  "version": "0.0.3",
+  "description": "A Node-RED Node to manage conversions of JDE Dates/Times to JS Dates/Times and vice versa",
+  "homepage": "https://agilite.io",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/agilitehub/node-red-modules/node-red-contrib-jde-date-time"
+  },
+  "bugs": {
+    "url": "https://github.com/agilitehub/node-red-modules/issues",
+    "email": "support@agilite.io"
+  },  
+  "author": "Agilit-e",  
+  "contributors": [
+    {
+      "name": "Armand Smit",
+      "email": "support@agilite.io",
+      "url": "https://agilite.io"
+    }
+  ], 
+  "dependencies": {
+    "jde-date-time": "0.0.7",
+    "mustache": "2.3.0"
+  },   
+  "keywords": [
+    "node-red",
+    "jde",
+    "agilite",
+    "dates",
+    "times",
+    "jd edwards"
+  ],
+  "node-red": {
+    "nodes": {
+      "JDE Date Time": "jde-date-time/jde-date-time.js"
+    }
+  }
+}
