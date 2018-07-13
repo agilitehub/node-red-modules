@@ -1,0 +1,114 @@
+<script type="text/javascript">
+  var agiliteUtilityUUIDFunctions = {
+    updateUUIDVersion:function(){
+        var value = $("#node-input-uuidVersion option:selected").val();
+
+        switch(value){
+          case "v3":
+          case "v5": 
+            document.querySelector("#rowNamespaceType").style.display = "block";
+            document.querySelector("#rowNamespace").style.display = "block";
+            break;         
+          default:
+            document.querySelector("#rowNamespaceType").style.display = "none";
+            document.querySelector("#rowNamespace").style.display = "none";
+            document.querySelector("#rowNamespaceCustom").style.display = "none";
+            break;
+        }
+
+        agiliteUtilityUUIDFunctions.updateNamespaceType();
+    },
+    updateNamespaceType:function(){
+      var uuidVersion = $("#node-input-uuidVersion option:selected").val();
+      var value = $("#node-input-namespaceType option:selected").val();
+
+      if(value !== "custom" || uuidVersion === "v1" || uuidVersion === "v4"){
+        document.querySelector("#rowNamespaceCustom").style.display = "none";
+      }else{
+        document.querySelector("#rowNamespaceCustom").style.display = "block";
+      }
+    }    
+  }
+
+  RED.nodes.registerType('uuid',{
+    category: "utilities",
+    inputs: 1,
+    outputs:1,
+    icon: "uuid.png",
+    color: "#ffa4a2",
+    label: function() {
+        return this.name||"UUID";
+    },
+    paletteLabel : "uuid",
+    defaults : {
+      uuidVersion: {
+        value : "",
+        required : true
+      },
+      namespaceType: {
+        value : ""
+      },
+      namespace: {
+        value : ""
+      },
+      namespaceCustom: {
+        value : ""
+      },            
+      name: {
+        value:""
+      }
+    },
+    oneditprepare: function(){
+      $("#node-input-uuidVersion").change(function(){agiliteUtilityUUIDFunctions.updateUUIDVersion()});
+      $("#node-input-namespaceType").change(function(){agiliteUtilityUUIDFunctions.updateNamespaceType()});
+
+      agiliteUtilityUUIDFunctions.updateUUIDVersion();
+      agiliteUtilityUUIDFunctions.updateNamespaceType();
+    }    
+  });
+</script>
+
+<script type="text/x-red" data-template-name="uuid">
+  <div class="form-row" id="rowUUIDVersion">
+      <label for="node-input-uuidVersion"><i class="fa fa-arrow-circle-right"></i> UUID Version</label>
+      <select id="node-input-uuidVersion" style="width:auto;">
+        <option value="v1">Version 1 (Timestamp)</option>
+        <option value="v3">Version 3 (Namespace)</option>
+        <option value="v4">Version 4 (Random)</option>
+        <option value="v5">Version 5 (Namespace)</option>
+      </select>
+  </div>
+  <div class="form-row" id="rowNamespaceType">
+    <label for="node-input-namespaceType"><i class="fa fa-arrow-circle-right"></i> Namespace Type</label>
+    <select id="node-input-namespaceType" style="width:auto;">
+      <option value="dns">DNS</option>
+      <option value="url">URL</option>
+      <option value="custom">CUSTOM</option>
+    </select>
+  </div>
+  <div class="form-row" id="rowNamespaceCustom">
+    <label for="node-input-namespaceCustom"><i class="fa fa-calendar-times-o"></i> Custom Namespace</label>
+    <input type="text" id="node-input-namespaceCustom" placeholder="A UUID string specific to your app" />
+  </div>
+  <div class="form-row" id="rowNamespace">
+    <label for="node-input-namespace"><i class="fa fa-key"></i> Namespace</label>
+    <input type="text" id="node-input-namespace" placeholder="e.g. 'Hello, World!'" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+    <input type="text" id="node-input-name" placeholder="Node Name" />
+  </div>
+</script>
+
+<script type="text/x-red" data-help-name="uuid">
+  <p>A Node-RED utility node by Agilit-e based on the 'uuid' Module for NodeJS.</p>
+  <p>The following properties can either be manually specified in the UI Form of this node, or passed programmatically via <code>msg.agiliteUtils</code>:
+    <ul>
+        <li><code>uuidVersion</code>: Enum (v1/v3/v4/v5)</li>
+        <li><code>namespaceType</code>: Enum (dns/url/custom)</li>
+        <li><code>namespaceCustom</code>: String</li>
+        <li><code>namespace</code>: String</li>
+    </ul>
+  </p>
+  <p>The output of this node delivers String value to <code>msg.payload</code>.</p>
+</script>
