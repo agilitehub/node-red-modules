@@ -26,8 +26,8 @@ module.exports = function(RED){
             }
 
             if(!success){
-                msg.payload = errorMessage;
-                node.send(msg);
+                node.error(errorMessage, msg);
+                return false;
             }
 
             dateTimeValue = Mustache.render(dateTimeValue, msg);
@@ -48,12 +48,16 @@ module.exports = function(RED){
                 break;
             }
 
-            if (node.fieldType === "msg"){
-                RED.util.setMessageProperty(msg,node.field,dateTimeValue)
-            }else if (node.fieldType === 'flow') {
-                node.context().flow.set(node.field,dateTimeValue);
-            } else if (node.fieldType === 'global') {
-                node.context().global.set(node.field,dateTimeValue);
+            switch (node.fieldType) {
+                case "msg":
+                    RED.util.setMessageProperty(msg, node.field, dateTimeValue);
+                    break;
+                case "flow":
+                    node.context().flow.set(node.field, dateTimeValue);
+                    break;
+                case "global":
+                    node.context().global.set(node.field, dateTimeValue);
+                    break;
             }
             
             

@@ -6,6 +6,8 @@ module.exports = function(RED) {
     let success = true;
     let errorMessage = "";
     let result = "";
+    this.field = config.field || "payload";
+    this.fieldType = config.fieldType || "msg";
 
     this.on('input', function(msg) {
       let uuidVersion = "";
@@ -108,7 +110,17 @@ module.exports = function(RED) {
           break;                  
       }
 
-      msg.payload = result;
+      switch (node.fieldType) {
+        case "msg":
+            RED.util.setMessageProperty(msg, node.field, result);
+            break; 
+        case "flow":
+            node.context().flow.set(node.field, result);
+            break;
+        case "global":
+            node.context().global.set(node.field, result);
+            break;
+    }
       node.send(msg);
     });
   }

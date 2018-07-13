@@ -1,7 +1,7 @@
 {
   "name": "node-red-contrib-jde-date-time",
   "license": "MIT",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A Node-RED Node to manage conversions of JDE Dates/Times to JS Dates/Times and vice versa",
   "homepage": "https://agilite.io",
   "repository": {

@@ -56,6 +56,12 @@
       },            
       name: {
         value:""
+      },
+      field: {
+        value: "payload",
+      },
+      fieldType: {
+        value: "msg"
       }
     },
     oneditprepare: function(){
@@ -64,6 +70,15 @@
 
       agiliteUtilityUUIDFunctions.updateUUIDVersion();
       agiliteUtilityUUIDFunctions.updateNamespaceType();
+
+      if(!this.fieldType)
+        this.fieldType = 'msg';
+      
+      $("#node-input-field").typedInput({
+          default: 'msg',
+          types: ['msg','flow','global'],
+          typeField: $("#node-input-fieldType")
+      });
     }    
   });
 </script>
@@ -93,6 +108,11 @@
   <div class="form-row" id="rowNamespace">
     <label for="node-input-namespace"><i class="fa fa-key"></i> Namespace</label>
     <input type="text" id="node-input-namespace" placeholder="e.g. 'Hello, World!'" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-field"><i class="fa fa-edit"></i> <span data-i18n="template.label.property">Output to</span></label>
+    <input type="text" id="node-input-field" placeholder="payload" style="width:250px;">
+    <input type="hidden" id="node-input-fieldType">
   </div>
   <div class="form-row">
     <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
