@@ -16,7 +16,6 @@ module.exports = function(RED) {
         this.fieldType = config.fieldType || "msg";
 
         this.on('input', function(msg) {
-          console.log(config)
             let uuidVersion = "";
             let namespaceType = "";
             let namespace = "";
