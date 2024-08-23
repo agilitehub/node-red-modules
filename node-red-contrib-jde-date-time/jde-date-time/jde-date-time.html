@@ -1,87 +1,87 @@
 <script type="text/javascript">
-    RED.nodes.registerType("jde-date-time", {
-        category: 'utilities',
-        color: "#ffa4a2",
-        icon: "arrow-in.png",
-        inputs:1,
-        outputs:1,
-        paletteLabel: "jde date time",
-        defaults: {
-            name: {value:""},
-            field: {value:"payload"},
-            fieldType: {value:"msg"},
-            actionType: {value:"", required: true},
-            dateTimeValue: {value:"", required: true}
-        },
-        label: function(){
-            return this.name||"JDE Date Time";
-        },
-        oneditprepare: function() {
-            var that = this;
-            if (!this.fieldType) {
-                this.fieldType = 'msg';
-            }
-            if (!this.syntax) {
-                this.syntax = 'mustache';
-                $("#node-input-syntax").val(this.syntax);
-            }
-            $("#node-input-field").typedInput({
-                default: 'msg',
-                types: ['msg','flow','global'],
-                typeField: $("#node-input-fieldType")
-            });
+  RED.nodes.registerType('jde-date-time', {
+    category: 'utilities',
+    color: '#ffa4a2',
+    icon: 'arrow-in.png',
+    inputs: 1,
+    outputs: 1,
+    paletteLabel: 'jde date time',
+    defaults: {
+      name: { value: '' },
+      field: { value: 'payload' },
+      fieldType: { value: 'msg' },
+      actionType: { value: '', required: true },
+      dateTimeValue: { value: '', required: true }
+    },
+    label: function () {
+      return this.name || 'JDE Date Time'
+    },
+    oneditprepare: function () {
+      var that = this
+      if (!this.fieldType) {
+        this.fieldType = 'msg'
+      }
+      if (!this.syntax) {
+        this.syntax = 'mustache'
+        $('#node-input-syntax').val(this.syntax)
+      }
+      $('#node-input-field').typedInput({
+        default: 'msg',
+        types: ['msg', 'flow', 'global'],
+        typeField: $('#node-input-fieldType')
+      })
 
-            this.editor = RED.editor.createEditor({
-                id: 'node-input-template-editor',
-                mode: 'ace/mode/html',
-                value: $("#node-input-template").val()
-            });
-            RED.library.create({
-                url:"functions", // where to get the data from
-                type:"function", // the type of object the library is for
-                editor:that.editor, // the field name the main text body goes to
-                fields:['name','outputs']
-            });
-            this.editor.focus();
+      this.editor = RED.editor.createEditor({
+        id: 'node-input-template-editor',
+        mode: 'ace/mode/html',
+        value: $('#node-input-template').val()
+      })
+      RED.library.create({
+        url: 'functions', // where to get the data from
+        type: 'function', // the type of object the library is for
+        editor: that.editor, // the field name the main text body goes to
+        fields: ['name', 'outputs']
+      })
+      this.editor.focus()
 
-            $("#node-input-format").change(function() {
-                var mod = "ace/mode/"+$("#node-input-format").val();
-                that.editor.getSession().setMode({
-                   path: mod,
-                   v: Date.now()
-                })
-            });
-        }
-    });
+      $('#node-input-format').change(function () {
+        var mod = 'ace/mode/' + $('#node-input-format').val()
+        that.editor.getSession().setMode({
+          path: mod,
+          v: Date.now()
+        })
+      })
+    }
+  })
 </script>
 
 <script type="text/x-red" data-template-name="jde-date-time">
-    <div class="form-row">
-        <label for="node-input-actionType"><i class="fa fa-arrow-circle-right"></i> Action Type</label>
-        <select id="node-input-actionType" style="width: auto;">
-            <option value="">-Select-</option>
-            <option value="1">JDE Date to JS Date</option>
-            <option value="2">JDE Time to JS Time</option>
-            <option value="3">JS Date to JDE Date</option>
-            <option value="4">JS Time to JDE Time</option>
-        </select>
-    </div>
+  <div class="form-row">
+      <label for="node-input-actionType"><i class="fa fa-arrow-circle-right"></i> Action Type</label>
+      <select id="node-input-actionType" style="width: auto;">
+          <option value="">-Select-</option>
+          <option value="1">JDE Date to JS Date</option>
+          <option value="2">JDE Time to JS Time</option>
+          <option value="3">JS Date to JDE Date</option>
+          <option value="4">JS Time to JDE Time</option>
+      </select>
+  </div>
 
-    <div class="form-row">
-        <label for="node-input-dateTimeValue"><i class="fa fa-calendar-times-o"></i> Date/Time Value {{m}}</label>
-        <input type="text" id="node-input-dateTimeValue">
-    </div>
-    <div class="form-row">
-        <label for="node-input-field"><i class="fa fa-edit"></i> <span data-i18n="template.label.property">Output to</span></label>
-        <input type="text" id="node-input-field" placeholder="payload" style="width:250px;">
-        <input type="hidden" id="node-input-fieldType">
-    </div>
-    <div class="form-row">
-        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
-        <input type="text" id="node-input-name" placeholder="Node Name" />
-    <div>
+  <div class="form-row">
+      <label for="node-input-dateTimeValue"><i class="fa fa-calendar-times-o"></i> Date/Time Value {{m}}</label>
+      <input type="text" id="node-input-dateTimeValue">
+  </div>
+  <div class="form-row">
+      <label for="node-input-field"><i class="fa fa-edit"></i> <span data-i18n="template.label.property">Output to</span></label>
+      <input type="text" id="node-input-field" placeholder="payload" style="width:250px;">
+      <input type="hidden" id="node-input-fieldType">
+  </div>
+  <div class="form-row">
+      <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+      <input type="text" id="node-input-name" placeholder="Node Name" />
+  <div>
 </script>
 
 <script type="text/x-red" data-help-name="jde-date-time">
-    <p>Converts JDE Date/Time to JS Date/Time or JS Date/Time to JDE Date/Time</p>
+  <p>Converts JDE Date/Time to JS Date/Time or JS Date/Time to JDE Date/Time</p>
 </script>

@@ -1,86 +1,89 @@
 <script type="text/javascript">
   var agiliteUtilityUUIDFunctions = {
-    updateUUIDVersion:function(){
-        var value = $("#node-input-uuidVersion option:selected").val();
+    updateUUIDVersion: function () {
+      var value = $('#node-input-uuidVersion option:selected').val()
 
-        switch(value){
-          case "v3":
-          case "v5": 
-            document.querySelector("#rowNamespaceType").style.display = "block";
-            document.querySelector("#rowNamespace").style.display = "block";
-            break;         
-          default:
-            document.querySelector("#rowNamespaceType").style.display = "none";
-            document.querySelector("#rowNamespace").style.display = "none";
-            document.querySelector("#rowNamespaceCustom").style.display = "none";
-            break;
-        }
-
-        agiliteUtilityUUIDFunctions.updateNamespaceType();
-    },
-    updateNamespaceType:function(){
-      var uuidVersion = $("#node-input-uuidVersion option:selected").val();
-      var value = $("#node-input-namespaceType option:selected").val();
-
-      if(value !== "custom" || uuidVersion === "v1" || uuidVersion === "v4"){
-        document.querySelector("#rowNamespaceCustom").style.display = "none";
-      }else{
-        document.querySelector("#rowNamespaceCustom").style.display = "block";
+      switch (value) {
+        case 'v3':
+        case 'v5':
+          document.querySelector('#rowNamespaceType').style.display = 'block'
+          document.querySelector('#rowNamespace').style.display = 'block'
+          break
+        default:
+          document.querySelector('#rowNamespaceType').style.display = 'none'
+          document.querySelector('#rowNamespace').style.display = 'none'
+          document.querySelector('#rowNamespaceCustom').style.display = 'none'
+          break
       }
-    }    
+
+      agiliteUtilityUUIDFunctions.updateNamespaceType()
+    },
+    updateNamespaceType: function () {
+      var uuidVersion = $('#node-input-uuidVersion option:selected').val()
+      var value = $('#node-input-namespaceType option:selected').val()
+
+      if (value !== 'custom' || uuidVersion === 'v1' || uuidVersion === 'v4') {
+        document.querySelector('#rowNamespaceCustom').style.display = 'none'
+      } else {
+        document.querySelector('#rowNamespaceCustom').style.display = 'block'
+      }
+    }
   }
 
-  RED.nodes.registerType('uuid',{
-    category: "utilities",
+  RED.nodes.registerType('uuid', {
+    category: 'utilities',
     inputs: 1,
-    outputs:1,
-    icon: "uuid.png",
-    color: "#ffa4a2",
-    label: function() {
-        return this.name||"UUID";
+    outputs: 1,
+    icon: 'uuid.png',
+    color: '#ffa4a2',
+    label: function () {
+      return this.name || 'UUID'
     },
-    paletteLabel : "uuid",
-    defaults : {
+    paletteLabel: 'uuid',
+    defaults: {
       uuidVersion: {
-        value : "",
-        required : true
+        value: '',
+        required: true
       },
       namespaceType: {
-        value : ""
+        value: ''
       },
       namespace: {
-        value : ""
+        value: ''
       },
       namespaceCustom: {
-        value : ""
-      },            
+        value: ''
+      },
       name: {
-        value:""
+        value: ''
       },
       field: {
-        value: "payload",
+        value: 'payload'
       },
       fieldType: {
-        value: "msg"
+        value: 'msg'
       }
     },
-    oneditprepare: function(){
-      $("#node-input-uuidVersion").change(function(){agiliteUtilityUUIDFunctions.updateUUIDVersion()});
-      $("#node-input-namespaceType").change(function(){agiliteUtilityUUIDFunctions.updateNamespaceType()});
+    oneditprepare: function () {
+      $('#node-input-uuidVersion').change(function () {
+        agiliteUtilityUUIDFunctions.updateUUIDVersion()
+      })
+      $('#node-input-namespaceType').change(function () {
+        agiliteUtilityUUIDFunctions.updateNamespaceType()
+      })
 
-      agiliteUtilityUUIDFunctions.updateUUIDVersion();
-      agiliteUtilityUUIDFunctions.updateNamespaceType();
+      agiliteUtilityUUIDFunctions.updateUUIDVersion()
+      agiliteUtilityUUIDFunctions.updateNamespaceType()
 
-      if(!this.fieldType)
-        this.fieldType = 'msg';
-      
-      $("#node-input-field").typedInput({
-          default: 'msg',
-          types: ['msg','flow','global'],
-          typeField: $("#node-input-fieldType")
-      });
-    }    
-  });
+      if (!this.fieldType) this.fieldType = 'msg'
+
+      $('#node-input-field').typedInput({
+        default: 'msg',
+        types: ['msg', 'flow', 'global'],
+        typeField: $('#node-input-fieldType')
+      })
+    }
+  })
 </script>
 
 <script type="text/x-red" data-template-name="uuid">

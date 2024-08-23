@@ -1,7 +1,7 @@
 {
   "name": "node-red-contrib-uuid",
   "license": "MIT",
-  "version": "0.0.3",
+  "version": "0.0.4-rc-1",
   "description": "A Node-RED Node for simple, fast generation of RFC4122 UUIDS",
   "homepage": "https://agilite.io",
   "repository": {
@@ -11,17 +11,17 @@
   "bugs": {
     "url": "https://github.com/agilitehub/node-red-modules/issues",
     "email": "support@agilite.io"
-  },  
-  "author": "Agilit-e",  
+  },
+  "author": "Agilit-e",
   "contributors": [
     {
       "name": "John Jardin",
       "email": "support@agilite.io",
       "url": "https://agilite.io"
     }
-  ], 
+  ],
   "dependencies": {
-    "uuid": "3.2.1"
+    "uuid": "10.0.0"
   },
   "keywords": [
     "node-red",
